@@ -32,7 +32,6 @@ InterSystems IRIS [durable %SYS](https://docs.intersystems.com/irislatest/csp/do
 ./iris.sys.d1  
 ./iris.sys.d2
 
-
 A container-network is created with a range of ip addresses to  
 - pin services to a fixed IP and  
 - to avoid conflict with local subnets
