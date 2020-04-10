@@ -1,0 +1,70 @@
+version: '3.7'
+# This compose runs 3 services: 
+# - 2 x IRIS instances and 
+# - 1 x Arbiter
+#
+# Durable %SYS directories will be in 
+# ./iris.sys.d1
+# ./iris.sys.d2
+#
+# A network is defined with a range of ip addresses to 
+# a) pin services to an IP and 
+# b) to avoid conflict with local subnets
+#
+networks:
+  irisdev:
+    driver: bridge
+    driver_opts:
+      com.docker.network.enable_ipv4: "true"
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.0.0.0/16
+
+services:
+  iris1:
+    image: intersystems/iris:2020.1.0.215.0 
+    command: [ "-b /home/irisowner/irissys/startISCAgent.sh 2188", "--key", "/ISC/iris.key"]
+    hostname: iris1
+    init: true
+    networks:
+      irisdev:
+        ipv4_address: 10.0.0.11
+    ports:
+      - "9011:51773"
+      - "9012:52773"
+    environment:
+      - ISC_DATA_DIRECTORY=/ISC/iris.sys.d1
+      - ISC_CPF_MERGE_FILE=/ISC/mirrorPrimary.conf
+    volumes:
+      - ./:/ISC
+
+  iris2:
+    image: intersystems/iris:2020.1.0.215.0 
+    command: ["-b /home/irisowner/irissys/startISCAgent.sh 2188", "--key", "/ISC/iris.key"]
+    hostname: iris2
+    init: true
+    networks:
+      irisdev:
+        ipv4_address: 10.0.0.12
+    ports:
+      - "9021:51773"
+      - "9022:52773"
+    environment:
+      - ISC_DATA_DIRECTORY=/ISC/iris.sys.d2
+      - ISC_CPF_MERGE_FILE=/ISC/mirrorBackup.conf
+    volumes:
+     - ./:/ISC
+    depends_on: 
+      - iris1
+
+  arbiter:
+    image: intersystems/arbiter:2020.1.0.215.0
+      #docker.iscinternal.com/intersystems/arbiter:2020.1.0.213.0
+    networks:
+      irisdev:
+        ipv4_address: 10.0.0.13
+    command: ["/usr/local/etc/irissys/startISCAgent.sh 2188"]
+    hostname: arbiter
+    #ports:
+      #- "2188:2188" communication happening within the container network; no host publishing needed.
