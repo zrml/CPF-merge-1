@@ -41,7 +41,7 @@ A container-network is created with a range of ip addresses to
 - You will need a non CE version of InterSystems IRIS 2020.1
 - You will need an adequate key supporting InterSystems mirroring and shard technologies
 - In order to reset your local  environment and remove the durable %SYS directories there is the *deleteDurableSYS.sh* script
-- and 2 convenience scripts to start and stop the composition: *./start.sh* and *./stop.sh*
+- and 2 convenience scripts to start and stop the composition: *start.sh* and *stop.sh*
 
 
 ---
