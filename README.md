@@ -19,7 +19,7 @@ Please review the files
 - *mirrorPrimary.conf* and  
 - *mirrorBackup.conf*  
 and see how the **ShardRole** and **ShardMirrorMember** keys are defined. It should be selfexplantory, otherwise see InterSystems documentatopm
-- [main CPF merge doc page](https://docs.intersystems.com/irislatest/csp/docbook/Doc.View.cls?KEY=ADOCK#ADOCK_iris_customizing)  
+- [main CPF merge doc page](https://docs.intersystems.com/irislatest/csp/docbook/Doc.View.cls?KEY=ADOCK#ADOCK_iris_customizing){:target="_blank"}
 - [SharddRole](https://docs.intersystems.com/irislatest/csp/docbook/Doc.View.cls?KEY=RACS_ShardRole)  
 - [ShardMirrorMember](https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=RACS_ShardMirrorMember)  
 - [ArbiterURL](https://docs.intersystems.com/irislatest/csp/docbook/Doc.View.cls?KEY=RACS_ArbiterURL)   
