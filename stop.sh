@@ -1,5 +1,5 @@
 #!/bin/bash
 
-docker-compose -p m down
+docker-compose -p mirror down
 
 ./deleteDurableSYS.sh

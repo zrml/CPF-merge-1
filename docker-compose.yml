@@ -12,7 +12,7 @@ version: '3.7'
 # b) to avoid conflict with local subnets
 #
 networks:
-  irisdev:
+  iris-net:
     driver: bridge
     driver_opts:
       com.docker.network.enable_ipv4: "true"
@@ -25,10 +25,12 @@ services:
   iris1:
     image: intersystems/iris:2020.1.0.215.0 
     command: [ "-b /home/irisowner/irissys/startISCAgent.sh 2188", "--key", "/ISC/iris.key"]
+    labels:
+      - "traefik.http.routers.iris1-m.rule=Host(`iris1-m.docker.localhost`)"
     hostname: iris1
     init: true
     networks:
-      irisdev:
+      iris-net:
         ipv4_address: 10.0.0.11
     ports:
       - "9011:51773"
@@ -42,10 +44,12 @@ services:
   iris2:
     image: intersystems/iris:2020.1.0.215.0 
     command: ["-b /home/irisowner/irissys/startISCAgent.sh 2188", "--key", "/ISC/iris.key"]
+    labels:
+      - "traefik.http.routers.iris2-m.rule=Host(`iris2-m.docker.localhost`)"
     hostname: iris2
     init: true
     networks:
-      irisdev:
+      iris-net:
         ipv4_address: 10.0.0.12
     ports:
       - "9021:51773"
@@ -62,7 +66,7 @@ services:
     image: intersystems/arbiter:2020.1.0.215.0
       #docker.iscinternal.com/intersystems/arbiter:2020.1.0.213.0
     networks:
-      irisdev:
+      iris-net:
         ipv4_address: 10.0.0.13
     command: ["/usr/local/etc/irissys/startISCAgent.sh 2188"]
     hostname: arbiter
